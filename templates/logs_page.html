@@ -1,0 +1,105 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Logs - File Management System</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        #searchInput {
+            margin-bottom: 10px;
+        }
+
+        #userLogTable {
+            margin-top: 10px;
+        }
+
+        #userLogTable td {
+            padding: 8px;
+            border: 1px solid #dee2e6;
+        }
+
+        .error {
+            color: #dc3545;
+            display: none; /* Hide by default */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Logs</h1>
+        <input type="text" id="searchInput" class="form-control" placeholder="Search logs...">
+        <table id="userLogTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Username</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="userLogBody"></tbody>
+        </table>
+        <div id="error-message" class="error"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', fetchUserLogs);
+
+        async function fetchUserLogs() {
+            try {
+                const response = await fetch('/logs', { credentials: 'include' });
+                if (response.ok) {
+                    const logs = await response.json();
+                    renderUserLogs(logs);
+                } else {
+                    const errorText = await response.text();
+                    throw new Error(`Error ${response.status}: ${errorText}`);
+                }
+            } catch (error) {
+                displayError('Error fetching user logs.');
+                console.error('Error fetching user logs:', error);
+            }
+        }
+
+        function renderUserLogs(logs) {
+            const userLogBody = document.getElementById('userLogBody');
+            userLogBody.innerHTML = '';
+            logs.forEach(log => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${log.timestamp}</td><td>${log.username}</td><td>${log.action}</td>`;
+                userLogBody.appendChild(row);
+            });
+        }
+
+        function displayError(message) {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+
+        document.getElementById('searchInput').addEventListener('input', () => {
+            const filter = document.getElementById('searchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#userLogBody tr');
+            rows.forEach(row => {
+                const cells = row.getElementsByTagName('td');
+                let text = '';
+                for (let cell of cells) {
+                    text += cell.textContent.toLowerCase() + ' ';
+                }
+                row.style.display = text.includes(filter) ? '' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>

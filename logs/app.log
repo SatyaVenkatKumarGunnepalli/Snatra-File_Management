@@ -1,0 +1,162 @@
+2024-09-19 12:35:13,836 - INFO - [System] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-09-19 12:35:13,836 - INFO - [System] - [33mPress CTRL+C to quit[0m
+2024-09-19 12:35:13,851 - INFO - [System] -  * Restarting with stat
+2024-09-19 12:35:14,731 - WARNING - [System] -  * Debugger is active!
+2024-09-19 12:35:14,731 - INFO - [System] -  * Debugger PIN: 144-466-991
+2024-09-19 12:35:32,771 - INFO - [Anonymous] - Request Path: /login
+2024-09-19 12:35:32,772 - INFO - [Anonymous] - User Logged In: False
+2024-09-19 12:35:32,777 - INFO - [Anonymous] - Response Status: 200 OK
+2024-09-19 12:35:32,778 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:35:32] "GET /login HTTP/1.1" 200 -
+2024-09-19 12:35:47,760 - INFO - [Anonymous] - Request Path: /login
+2024-09-19 12:35:47,760 - INFO - [Anonymous] - User Logged In: False
+2024-09-19 12:35:47,886 - INFO - [bhavani@123] - User bhavani@123 logged in successfully, redirecting to /
+2024-09-19 12:35:47,886 - INFO - [bhavani@123] - Response Status: 302 FOUND
+2024-09-19 12:35:47,886 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:35:47] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-09-19 12:35:47,902 - INFO - [bhavani@123] - Request Path: /
+2024-09-19 12:35:47,902 - INFO - [bhavani@123] - User Logged In: True
+2024-09-19 12:35:47,906 - INFO - [bhavani@123] - Response Status: 200 OK
+2024-09-19 12:35:47,906 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:35:47] "GET / HTTP/1.1" 200 -
+2024-09-19 12:35:47,941 - INFO - [bhavani@123] - Request Path: /current_user
+2024-09-19 12:35:47,941 - INFO - [bhavani@123] - User Logged In: True
+2024-09-19 12:35:47,941 - INFO - [bhavani@123] - Response Status: 200 OK
+2024-09-19 12:35:47,942 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:35:47] "GET /current_user HTTP/1.1" 200 -
+2024-09-19 12:35:47,943 - INFO - [bhavani@123] - Request Path: /list
+2024-09-19 12:35:47,943 - INFO - [bhavani@123] - User Logged In: True
+2024-09-19 12:35:47,944 - INFO - [bhavani@123] - Response Status: 200 OK
+2024-09-19 12:35:47,945 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:35:47] "GET /list?path= HTTP/1.1" 200 -
+2024-09-19 12:35:51,525 - INFO - [bhavani@123] - Request Path: /list
+2024-09-19 12:35:51,525 - INFO - [bhavani@123] - User Logged In: True
+2024-09-19 12:35:51,525 - INFO - [bhavani@123] - Response Status: 200 OK
+2024-09-19 12:35:51,541 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:35:51] "GET /list?path=SnatraPharmaceuticals HTTP/1.1" 200 -
+2024-09-19 12:35:53,274 - INFO - [bhavani@123] - Request Path: /list
+2024-09-19 12:35:53,274 - INFO - [bhavani@123] - User Logged In: True
+2024-09-19 12:35:53,290 - INFO - [bhavani@123] - Response Status: 200 OK
+2024-09-19 12:35:53,290 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:35:53] "GET /list?path=SnatraPharmaceuticals\\CompanyE HTTP/1.1" 200 -
+2024-09-19 12:35:54,840 - INFO - [bhavani@123] - Request Path: /list
+2024-09-19 12:35:54,855 - INFO - [bhavani@123] - User Logged In: True
+2024-09-19 12:35:54,855 - INFO - [bhavani@123] - Response Status: 200 OK
+2024-09-19 12:35:54,855 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:35:54] "GET /list?path=SnatraPharmaceuticals\\CompanyE\\Purchase HTTP/1.1" 200 -
+2024-09-19 12:36:00,539 - INFO - [bhavani@123] - Request Path: /list
+2024-09-19 12:36:00,539 - INFO - [bhavani@123] - User Logged In: True
+2024-09-19 12:36:00,554 - INFO - [bhavani@123] - Response Status: 200 OK
+2024-09-19 12:36:00,555 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:36:00] "GET /list?path=SnatraPharmaceuticals\\CompanyE\\Purchase\\2024-01 HTTP/1.1" 200 -
+2024-09-19 12:36:04,773 - INFO - [bhavani@123] - Request Path: /list
+2024-09-19 12:36:04,773 - INFO - [bhavani@123] - User Logged In: True
+2024-09-19 12:36:04,788 - INFO - [bhavani@123] - Response Status: 200 OK
+2024-09-19 12:36:04,788 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:36:04] "GET /list?path=SnatraPharmaceuticals\\CompanyE\\Purchase\\2024-01\\2024-01-03-CompanyE-Product5-50 HTTP/1.1" 200 -
+2024-09-19 12:36:06,189 - INFO - [bhavani@123] - Request Path: /list
+2024-09-19 12:36:06,189 - INFO - [bhavani@123] - User Logged In: True
+2024-09-19 12:36:06,189 - INFO - [bhavani@123] - Response Status: 200 OK
+2024-09-19 12:36:06,204 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:36:06] "GET /list?path=SnatraPharmaceuticals\\CompanyE\\Purchase\\2024-01\\2024-01-03-CompanyE-Product5-50\\COA HTTP/1.1" 200 -
+2024-09-19 12:36:07,005 - INFO - [bhavani@123] - Request Path: /view/SnatraPharmaceuticals\CompanyE\Purchase\2024-01\2024-01-03-CompanyE-Product5-50\COA\COA.pdf
+2024-09-19 12:36:07,005 - INFO - [bhavani@123] - User Logged In: True
+2024-09-19 12:36:07,067 - INFO - [bhavani@123] - User bhavani@123 viewed file: SnatraPharmaceuticals\CompanyE\Purchase\2024-01\2024-01-03-CompanyE-Product5-50\COA\COA.pdf
+2024-09-19 12:36:07,083 - INFO - [bhavani@123] - Response Status: 200 OK
+2024-09-19 12:36:07,083 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:36:07] "GET /view/SnatraPharmaceuticals\\CompanyE\\Purchase\\2024-01\\2024-01-03-CompanyE-Product5-50\\COA\\COA.pdf HTTP/1.1" 200 -
+2024-09-19 12:36:10,175 - INFO - [bhavani@123] - Request Path: /logout
+2024-09-19 12:36:10,177 - INFO - [bhavani@123] - User Logged In: True
+2024-09-19 12:36:10,177 - INFO - [bhavani@123] - User bhavani@123 logged out
+2024-09-19 12:36:10,178 - INFO - [Anonymous] - Response Status: 200 OK
+2024-09-19 12:36:10,179 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:36:10] "POST /logout HTTP/1.1" 200 -
+2024-09-19 12:36:10,198 - INFO - [Anonymous] - Request Path: /login
+2024-09-19 12:36:10,198 - INFO - [Anonymous] - User Logged In: False
+2024-09-19 12:36:10,198 - INFO - [Anonymous] - Response Status: 200 OK
+2024-09-19 12:36:10,198 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:36:10] "GET /login HTTP/1.1" 200 -
+2024-09-19 12:36:22,356 - INFO - [Anonymous] - Request Path: /login
+2024-09-19 12:36:22,356 - INFO - [Anonymous] - User Logged In: False
+2024-09-19 12:36:22,499 - INFO - [admin] - Admin admin logged in successfully, redirecting to /admin
+2024-09-19 12:36:22,499 - INFO - [admin] - Response Status: 302 FOUND
+2024-09-19 12:36:22,499 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:36:22] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-09-19 12:36:22,499 - INFO - [admin] - Request Path: /admin
+2024-09-19 12:36:22,499 - INFO - [admin] - User Logged In: True
+2024-09-19 12:36:22,499 - INFO - [admin] - Response Status: 200 OK
+2024-09-19 12:36:22,499 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:36:22] "GET /admin HTTP/1.1" 200 -
+2024-09-19 12:36:22,538 - INFO - [admin] - Request Path: /list
+2024-09-19 12:36:22,538 - INFO - [admin] - Request Path: /current_user
+2024-09-19 12:36:22,538 - INFO - [admin] - User Logged In: True
+2024-09-19 12:36:22,538 - INFO - [admin] - User Logged In: True
+2024-09-19 12:36:22,539 - INFO - [admin] - Request Path: /api/users
+2024-09-19 12:36:22,540 - INFO - [admin] - Response Status: 200 OK
+2024-09-19 12:36:22,540 - INFO - [admin] - User Logged In: True
+2024-09-19 12:36:22,540 - INFO - [admin] - Response Status: 200 OK
+2024-09-19 12:36:22,540 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:36:22] "GET /current_user HTTP/1.1" 200 -
+2024-09-19 12:36:22,540 - INFO - [admin] - Request Path: /user-logs
+2024-09-19 12:36:22,540 - INFO - [admin] - Response Status: 200 OK
+2024-09-19 12:36:22,540 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:36:22] "GET /list?path= HTTP/1.1" 200 -
+2024-09-19 12:36:22,545 - INFO - [admin] - User Logged In: True
+2024-09-19 12:36:22,545 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:36:22] "GET /api/users HTTP/1.1" 200 -
+2024-09-19 12:36:22,561 - INFO - [admin] - Response Status: 200 OK
+2024-09-19 12:36:22,561 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:36:22] "GET /user-logs HTTP/1.1" 200 -
+2024-09-19 12:39:09,383 - INFO - [admin] - Request Path: /view_report
+2024-09-19 12:39:09,393 - INFO - [admin] - User Logged In: True
+2024-09-19 12:39:09,393 - INFO - [admin] - Report viewed
+2024-09-19 12:39:09,394 - INFO - [admin] - Response Status: 200 OK
+2024-09-19 12:39:09,395 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:39:09] "GET /view_report HTTP/1.1" 200 -
+2024-09-19 12:39:14,220 - INFO - [admin] - Request Path: /user-logs
+2024-09-19 12:39:14,220 - INFO - [admin] - User Logged In: True
+2024-09-19 12:39:14,262 - INFO - [admin] - Response Status: 200 OK
+2024-09-19 12:39:14,262 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:39:14] "GET /user-logs HTTP/1.1" 200 -
+2024-09-19 12:42:55,186 - INFO - [admin] - Request Path: /user-logs
+2024-09-19 12:42:55,186 - INFO - [admin] - User Logged In: True
+2024-09-19 12:42:55,217 - INFO - [admin] - Response Status: 200 OK
+2024-09-19 12:42:55,217 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:42:55] "GET /user-logs HTTP/1.1" 200 -
+2024-09-19 12:43:01,466 - INFO - [admin] - Request Path: /admin
+2024-09-19 12:43:01,466 - INFO - [admin] - User Logged In: True
+2024-09-19 12:43:01,529 - INFO - [admin] - Response Status: 200 OK
+2024-09-19 12:43:01,529 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:43:01] "GET /admin HTTP/1.1" 200 -
+2024-09-19 12:43:01,552 - INFO - [admin] - Request Path: /current_user
+2024-09-19 12:43:01,554 - INFO - [admin] - Request Path: /list
+2024-09-19 12:43:01,554 - INFO - [admin] - User Logged In: True
+2024-09-19 12:43:01,554 - INFO - [admin] - User Logged In: True
+2024-09-19 12:43:01,556 - INFO - [admin] - Request Path: /api/users
+2024-09-19 12:43:01,557 - INFO - [admin] - Response Status: 200 OK
+2024-09-19 12:43:01,558 - INFO - [admin] - Request Path: /user-logs
+2024-09-19 12:43:01,558 - INFO - [admin] - User Logged In: True
+2024-09-19 12:43:01,559 - INFO - [admin] - Response Status: 200 OK
+2024-09-19 12:43:01,559 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:43:01] "GET /current_user HTTP/1.1" 200 -
+2024-09-19 12:43:01,559 - INFO - [admin] - User Logged In: True
+2024-09-19 12:43:01,560 - INFO - [admin] - Response Status: 200 OK
+2024-09-19 12:43:01,560 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:43:01] "GET /list?path= HTTP/1.1" 200 -
+2024-09-19 12:43:01,561 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:43:01] "GET /api/users HTTP/1.1" 200 -
+2024-09-19 12:43:01,579 - INFO - [admin] - Response Status: 200 OK
+2024-09-19 12:43:01,579 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:43:01] "GET /user-logs HTTP/1.1" 200 -
+2024-09-19 12:43:20,556 - INFO - [admin] - Request Path: /view_report
+2024-09-19 12:43:20,557 - INFO - [admin] - User Logged In: True
+2024-09-19 12:43:20,557 - INFO - [admin] - Report viewed
+2024-09-19 12:43:20,559 - INFO - [admin] - Response Status: 200 OK
+2024-09-19 12:43:20,560 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:43:20] "GET /view_report HTTP/1.1" 200 -
+2024-09-19 12:43:22,213 - INFO - [admin] - Request Path: /user-logs
+2024-09-19 12:43:22,213 - INFO - [admin] - User Logged In: True
+2024-09-19 12:43:22,228 - INFO - [admin] - Response Status: 200 OK
+2024-09-19 12:43:22,228 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:43:22] "GET /user-logs HTTP/1.1" 200 -
+2024-09-19 12:43:58,198 - INFO - [admin] - Request Path: /user-logs
+2024-09-19 12:43:58,198 - INFO - [admin] - User Logged In: True
+2024-09-19 12:43:58,228 - INFO - [admin] - Response Status: 200 OK
+2024-09-19 12:43:58,228 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:43:58] "GET /user-logs HTTP/1.1" 200 -
+2024-09-19 12:43:59,231 - INFO - [admin] - Request Path: /user-logs
+2024-09-19 12:43:59,231 - INFO - [admin] - User Logged In: True
+2024-09-19 12:43:59,259 - INFO - [admin] - Response Status: 200 OK
+2024-09-19 12:43:59,259 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:43:59] "GET /user-logs HTTP/1.1" 200 -
+2024-09-19 12:44:08,828 - INFO - [admin] - Request Path: /view_report
+2024-09-19 12:44:08,828 - INFO - [admin] - User Logged In: True
+2024-09-19 12:44:08,829 - INFO - [admin] - Report viewed
+2024-09-19 12:44:08,830 - INFO - [admin] - Response Status: 200 OK
+2024-09-19 12:44:08,830 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:44:08] "GET /view_report HTTP/1.1" 200 -
+2024-09-19 12:44:58,502 - INFO - [Anonymous] - Request Path: /user-logs
+2024-09-19 12:44:58,503 - INFO - [Anonymous] - User Logged In: False
+2024-09-19 12:44:58,504 - INFO - [Anonymous] - Response Status: 302 FOUND
+2024-09-19 12:44:58,506 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:44:58] "[32mGET /user-logs HTTP/1.1[0m" 302 -
+2024-09-19 12:44:58,549 - INFO - [Anonymous] - Request Path: /login
+2024-09-19 12:44:58,550 - INFO - [Anonymous] - User Logged In: False
+2024-09-19 12:44:58,551 - INFO - [Anonymous] - Response Status: 200 OK
+2024-09-19 12:44:58,552 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:44:58] "GET /login?next=/user-logs HTTP/1.1" 200 -
+2024-09-19 12:45:01,275 - INFO - [Anonymous] - Request Path: /login
+2024-09-19 12:45:01,275 - INFO - [Anonymous] - User Logged In: False
+2024-09-19 12:45:01,414 - INFO - [admin] - Admin admin logged in successfully, redirecting to /user-logs
+2024-09-19 12:45:01,414 - INFO - [admin] - Response Status: 302 FOUND
+2024-09-19 12:45:01,414 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:45:01] "[32mPOST /login?next=/user-logs HTTP/1.1[0m" 302 -
+2024-09-19 12:45:01,596 - INFO - [admin] - Request Path: /user-logs
+2024-09-19 12:45:01,596 - INFO - [admin] - User Logged In: True
+2024-09-19 12:45:01,615 - INFO - [admin] - Response Status: 200 OK
+2024-09-19 12:45:01,615 - INFO - [System] - 127.0.0.1 - - [19/Sep/2024 12:45:01] "GET /user-logs HTTP/1.1" 200 -

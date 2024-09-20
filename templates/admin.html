@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - File Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 15px;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .auth-section {
+            display: flex;
+            align-items: center;
+        }
+        .auth-section button {
+            margin-left: 10px;
+        }
+        .table-wrapper {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd; /* Optional: Add a border for better visibility */
+}
+
+        #file-manager {
+            display: flex;
+            flex: 1;
+            padding: 20px;
+        }
+        #file-tree {
+            width: 30%;
+            border-right: 1px solid #dee2e6;
+            padding-right: 20px;
+            overflow-y: auto;
+        }
+        #file-preview {
+            width: 70%;
+            padding-left: 20px;
+            overflow-y: auto;
+        }
+        .folder, .file {
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+        .folder {
+            color: #007bff;
+        }
+        .folder:hover {
+            text-decoration: underline;
+        }
+        .file {
+            margin-left: 20px;
+            color: #28a745;
+        }
+        .file:hover {
+            text-decoration: underline;
+        }
+        .modal-content {
+            border-radius: 0.3rem;
+        }
+        .modal-footer {
+            border-top: none;
+        }
+        .error {
+            color: #dc3545;
+        }
+        .user-list, .user-log {
+            margin-top: 20px;
+        }
+        .report-section {
+            margin-top: 20px;
+        }
+        #report-preview {
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        #userListTable, #userLogTable {
+            width: 100%;
+            margin-top: 10px;
+        }
+        #userListTable td, #userLogTable td {
+            padding: 8px;
+            border: 1px solid #dee2e6;
+        }
+        #error-message {
+            display: none;
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <header class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1>Admin Dashboard - File Management System</h1>
+            <button class="btn btn-secondary" onclick="goBack()">Back</button>
+            <button class="btn btn-primary" onclick="createFolder()">Create Folder</button>
+            <button class="btn btn-primary" onclick="uploadFile()">Upload File</button>
+            <button class="btn btn-warning" onclick="renameItem()">Rename</button>
+            <button class="btn btn-info" onclick="generateReport()">Generate Report</button>
+            <button class="btn btn-success" onclick="downloadReport()">Download Report</button>
+        </div>
+        <div class="auth-section">
+            <span id="userStatus" class="mr-3"></span>
+            <button id="loginButton" class="btn btn-outline-light" onclick="showLogin()">Login</button>
+            <button id="logoutButton" class="btn btn-outline-light" style="display: none;" onclick="handleLogout()">Logout</button>
+        </div>
+    </header>
+
+    <div id="file-manager" class="d-flex">
+        <div id="file-tree"></div>
+        <div id="file-preview"></div>
+    </div>
+    <div id="fileMetadata" class="container mt-3"></div>
+
+    <!-- User List -->
+    <div class="user-list container mt-3">
+        <h3>User List</h3>
+        <table id="userListTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="userListBody"></tbody>
+        </table>
+    </div>
+
+    <!-- User Logs -->
+    <div class="container">
+    <h3>User Logs</h3>
+    <div class="table-wrapper">
+        <table id="userLogTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Username</th>
+                    <th>Action</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody id="userLogBody"></tbody>
+        </table>
+    </div>
+    <a onclick="fetchUserLogs()" class="btn btn-info">Refresh Logs</a>
+    <div id="error-message" class="error"></div>
+</div>
+
+
+
+
+    <!-- Report Section -->
+<div class="report-section container mt-3">
+    <h3>Report</h3>
+    <button class="btn btn-info" onclick="viewReport()">View Report</button>
+    <div id="report-preview"></div>
+</div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="loginForm" onsubmit="submitLogin(event)">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="loginUsername">Username</label>
+                            <input type="text" class="form-control" id="loginUsername" name="username" placeholder="Username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" name="password" placeholder="Password" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- File Input (Hidden) -->
+    <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload()">
+
+    <!-- Error Message -->
+    <div id="error-message"></div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        let currentPath = '';
+        let historyStack = [];
+        const fileTree = document.getElementById('file-tree');
+        const filePreview = document.getElementById('file-preview');
+        const fileContent = document.createElement('textarea');
+        fileContent.className = 'form-control';
+        fileContent.setAttribute('readonly', true);
+        filePreview.appendChild(fileContent);
+        const authSection = document.querySelector('.auth-section');
+        const loginButton = document.getElementById('loginButton');
+        const logoutButton = document.getElementById('logoutButton');
+        const loginModal = document.getElementById('loginModal');
+        const userListBody = document.getElementById('userListBody');
+        const userLogBody = document.getElementById('userLogBody');
+        const reportPreview = document.getElementById('report-preview');
+
+        async function fetchFiles(path = '') {
+            currentPath = path;
+            historyStack.push(path);
+            try {
+                const response = await fetch(`/list?path=${encodeURIComponent(path)}`, { credentials: 'include' });
+                if (response.ok) {
+                    const data = await response.json();
+                    renderFileTree(data, fileTree);
+                } else {
+                    throw new Error('Failed to fetch files');
+                }
+            } catch (error) {
+                displayError('Error fetching files.');
+                console.error('Error fetching files:', error);
+            }
+        }
+
+        function renderFileTree(data, parent) {
+            parent.innerHTML = '';
+            data.forEach(item => {
+                const element = document.createElement('div');
+                element.className = item.type === 'folder' ? 'folder' : 'file';
+                element.textContent = item.name;
+                if (item.type === 'folder') {
+                    element.onclick = () => fetchFiles(item.path);
+                } else {
+                    element.onclick = () => viewFile(item.path);
+                }
+                parent.appendChild(element);
+            });
+        }
+
+        async function goBack() {
+            if (historyStack.length > 1) {
+                historyStack.pop();
+                const path = historyStack.pop();
+                fetchFiles(path);
+            }
+        }
+
+        async function createFolder() {
+            const folderName = prompt('Enter folder name:');
+            if (folderName) {
+                const folderPath = currentPath ? `${currentPath}/${folderName}` : folderName;
+                try {
+                    const response = await fetch('/create_folder', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name: folderPath })
+                    });
+                    if (response.ok) {
+                        fetchFiles(currentPath);
+                    } else {
+                        alert('Error creating folder.');
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                } catch (error) {
+                    displayError('Error creating folder.');
+                    console.error('Error creating folder:', error);
+                }
+            }
+        }
+
+
+        async function uploadFile() {
+            document.getElementById('fileInput').click();
+        }
+
+        async function handleFileUpload() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('folder_path', currentPath || '');
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include'
+                });
+                if (response.ok) {
+                    fetchFiles(currentPath);
+                } else {
+                    throw new Error('Error uploading file.');
+                }
+            } catch (error) {
+                displayError('Error uploading file.');
+                console.error('Error uploading file:', error);
+            }
+        }
+
+        async function renameItem() {
+            const newName = prompt('Enter new name:');
+            if (newName) {
+                try {
+                    const response = await fetch('/rename', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ path: currentPath, newName }),
+                        credentials: 'include'
+                    });
+                    if (response.ok) {
+                        fetchFiles(currentPath);
+                    } else {
+                        throw new Error('Error renaming item.');
+                    }
+                } catch (error) {
+                    displayError('Error renaming item.');
+                    console.error('Error renaming item:', error);
+                }
+            }
+        }
+
+        async function viewFile(filename) {
+    console.log(`Attempting to view file: ${filename}`);
+    try {
+        const response = await fetch(`/view/${encodeURIComponent(filename)}`, { credentials: 'include' });
+        if (response.ok) {
+            const contentType = response.headers.get('Content-Type');
+            console.log(`Content-Type: ${contentType}`);
+            removePreviewElements();
+
+            if (contentType.startsWith('text/')) {
+                const content = await response.text();
+                fileContent.value = content;
+                fileContent.style.display = 'block';
+            } else if (contentType.startsWith('image/')) {
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                const image = new Image();
+                image.src = url;
+                image.style.maxWidth = '100%';
+                image.style.maxHeight = '500px';
+                filePreview.appendChild(image);
+            } else if (contentType === 'application/pdf') {
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                const iframe = document.createElement('iframe');
+                iframe.src = url;
+                iframe.style.width = '100%';
+                iframe.style.height = '500px';
+                filePreview.appendChild(iframe);
+            } else {
+                fileContent.value = 'Preview not available for this file type.';
+                fileContent.style.display = 'block';
+            }
+        } else {
+            fileContent.value = 'Error loading file.';
+            fileContent.style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Error fetching file:', error);
+        fileContent.value = 'Error loading file.';
+    }
+}
+function removePreviewElements() {
+    while (filePreview.firstChild) {
+        filePreview.removeChild(filePreview.firstChild);
+    }
+}
+
+
+        async function generateReport() {
+    try {
+        const response = await fetch('/generate_report', {
+            method: 'POST',
+            credentials: 'include'
+        });
+        if (response.ok) {
+            const result = await response.json();
+            if (result.success) {
+                alert('Report generated successfully.');
+            } else {
+                alert('Report Status: ' + result.message);
+            }
+        } else {
+            const errorText = await response.text();
+            alert('Error generating report: ' + errorText);
+        }
+    } catch (error) {
+        console.error('Error generating report:', error);
+        alert('Error generating report.');
+    }
+}
+
+
+        async function downloadReport() {
+    try {
+        const response = await fetch('/download_report', { credentials: 'include' });
+        if (response.ok) {
+            // Determine the filename from the Content-Disposition header if available
+            const contentDisposition = response.headers.get('Content-Disposition');
+            const filename = contentDisposition ? contentDisposition.split('filename=')[1].split(';')[0].replace(/['"]/g, '') : 'report.pdf';
+
+            // Create a blob from the response
+            const blob = await response.blob();
+            
+            // Log the blob type and size for debugging
+            console.log('Blob type:', blob.type);
+            console.log('Blob size:', blob.size);
+            
+            // Create a URL for the blob and trigger the download
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename; // Use the filename from the header or default
+            document.body.appendChild(a); // Append the link to the body
+            a.click();
+            document.body.removeChild(a); // Remove the link from the body
+            URL.revokeObjectURL(url); // Release the blob URL
+        } else {
+            throw new Error('Error downloading report. Server response: ' + response.status);
+        }
+    } catch (error) {
+        displayError('Error downloading report.');
+        console.error('Error downloading report:', error);
+    }
+}
+
+
+        async function viewReport() {
+    try {
+        const response = await fetch('/view_report', { credentials: 'include' });
+        if (response.ok) {
+            const reportData = await response.text();
+            formatAndDisplayReport(reportData);
+        } else {
+            throw new Error('Error fetching report data.');
+        }
+    } catch (error) {
+        displayError('Error viewing report.');
+        console.error('Error viewing report:', error);
+    }
+}
+
+function formatAndDisplayReport(data) {
+    const lines = data.trim().split('\n');
+    const table = document.createElement('table');
+    table.className = 'table table-striped';
+
+    const thead = document.createElement('thead');
+    const tbody = document.createElement('tbody');
+    
+    // Create table header
+    const headers = lines[0].split(',');
+    const headerRow = document.createElement('tr');
+    headers.forEach(header => {
+        const th = document.createElement('th');
+        th.textContent = header.trim();
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    
+    // Create table body
+    for (let i = 1; i < lines.length; i++) {
+        const row = document.createElement('tr');
+        const cells = lines[i].split(',');
+        cells.forEach(cell => {
+            const td = document.createElement('td');
+            td.textContent = cell.trim();
+            row.appendChild(td);
+        });
+        tbody.appendChild(row);
+    }
+
+    table.appendChild(thead);
+    table.appendChild(tbody);
+
+    const reportPreview = document.getElementById('report-preview');
+    reportPreview.innerHTML = '';  // Clear previous content
+    reportPreview.appendChild(table);
+}
+
+
+       async function fetchUserList() {
+    try {
+        // Make a request to the API endpoint
+        const response = await fetch('/api/users', { credentials: 'include' });
+
+        console.log('Response Status:', response.status);
+        console.log('Response Headers:', response.headers);
+
+        if (response.ok) {
+            const users = await response.json();
+            console.log('Users Data:', users);
+            renderUserList(users);
+        } else {
+            const errorText = await response.text(); // Read the error message from the response
+            throw new Error(`Error ${response.status}: ${errorText}`);
+        }
+    } catch (error) {
+        displayError('Error fetching user list.');
+        console.error('Error fetching user list:', error);
+    }
+}
+
+function renderUserList(users) {
+    const userListBody = document.getElementById('userListBody');
+    userListBody.innerHTML = '';
+
+    users.forEach(user => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${user.username}</td><td>${user.status}</td>`;
+        userListBody.appendChild(row);
+    });
+}
+
+        function showLogin() {
+            $('#loginModal').modal('show');
+        }
+
+        async function submitLogin(event) {
+            event.preventDefault();
+            const formData = new FormData(document.getElementById('loginForm'));
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include'
+                });
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success) {
+                        loginButton.style.display = 'none';
+                        logoutButton.style.display = 'inline-block';
+                        document.getElementById('userStatus').textContent = `Logged in as ${result.username}`;
+                        $('#loginModal').modal('hide');
+                        fetchUserList();
+                        fetchUserLogs();
+                    } else {
+                        throw new Error(result.message);
+                    }
+                } else {
+                    throw new Error('Login failed');
+                }
+            } catch (error) {
+                displayError('Error logging in.');
+                console.error('Error logging in:', error);
+            }
+        }
+
+       async function handleLogout() {
+    try {
+        const response = await fetch('/logout', {
+            method: 'POST',
+            credentials: 'include'
+        });
+        if (response.ok) {
+            // On successful logout, redirect or update UI
+            window.location.href = '/login'; // Redirect to login page
+        } else {
+            const error = await response.text();
+            console.error('Error logging out:', error);
+            alert('Error logging out.');
+        }
+    } catch (error) {
+        console.error('Error logging out:', error);
+        alert('Error logging out.');
+    }
+}
+
+
+        function displayError(message) {
+    const errorElement = document.getElementById('error');
+    if (errorElement) {
+        errorElement.textContent = message;
+    } else {
+        console.error(message);
+    }
+}
+
+
+ async function checkAuthentication() {
+    try {
+        const response = await fetch('/current_user', { credentials: 'include' });
+        if (response.ok) {
+            const data = await response.json();
+            loginButton.style.display = 'none';
+            logoutButton.style.display = 'inline';
+            document.getElementById('userStatus').textContent = `Logged in as: ${data.username} (${data.role})`;
+        } else {
+            loginButton.style.display = 'inline';
+            logoutButton.style.display = 'none';
+            document.getElementById('userStatus').textContent = 'Not logged in';
+        }
+    } catch (error) {
+        console.error('Error checking authentication:', error);
+        loginButton.style.display = 'inline';
+        logoutButton.style.display = 'none';
+        document.getElementById('userStatus').textContent = 'Not logged in';
+    }
+}
+
+
+async function fetchUserLogs() {
+    try {
+        const response = await fetch('/user-logs', { credentials: 'include' });
+        console.log('Response status:', response.status);
+        if (response.ok) {
+            const data = await response.json();
+            console.log('User logs data:', data); // Log the entire data object
+            if (Array.isArray(data.logs)) {
+                renderUserLogs(data.logs); // Use data.logs if it is an array
+            } else {
+                console.error('Expected logs to be an array but got:', data.logs);
+                displayError('No logs available.');
+            }
+        } else {
+            console.error('Fetch failed:', response.statusText);
+            throw new Error('Failed to fetch user logs');
+        }
+    } catch (error) {
+        displayError('Error fetching user logs.');
+        console.error('Error fetching user logs:', error);
+    }
+}
+
+function renderUserLogs(logs) {
+    userLogBody.innerHTML = '';
+    if (!Array.isArray(logs)) {
+        console.error('Expected an array of logs, but got:', logs);
+        displayError('Invalid log data received.');
+        return;
+    }
+    if (logs.length === 0) {
+        userLogBody.innerHTML = '<tr><td colspan="4">No logs found.</td></tr>';
+        return;
+    }
+    
+    // Reverse the logs array to display latest logs on top
+    logs.reverse();
+    
+    logs.forEach(log => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${log.timestamp || 'N/A'}</td><td>${log.username || 'N/A'}</td><td>${log.action || 'N/A'}</td><td>${log.details || 'N/A'}</td>`;
+        userLogBody.appendChild(row);
+    });
+}
+
+function displayError(message) {
+    const errorMessage = document.getElementById('error-message');
+    errorMessage.textContent = message;
+    errorMessage.style.display = 'block';
+}
+
+
+// Ensure checkAuthentication is called on page load
+checkAuthentication();
+
+        // Initial setup
+        fetchFiles();
+        fetchUserList();
+        fetchUserLogs();
+    </script>
+</body>
+</html>

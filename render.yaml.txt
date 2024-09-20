@@ -1,0 +1,9 @@
+version: 1
+services:
+  - type: web
+    name: Python web app
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app.py:app"
+    autoDeploy: true
